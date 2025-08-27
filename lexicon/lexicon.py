@@ -1,4 +1,4 @@
-FRIDAY_RESPONSES = {"synonyms": ("пятница", "ассистент", "бот")}
+FRIDAY_RESPONSES = {"synonyms": ("пятница", "ассистент", "бот")} # можете поменять на что-то своё
 
 LEXICON = {
     "apps": {
