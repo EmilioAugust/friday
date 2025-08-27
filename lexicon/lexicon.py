@@ -1,23 +1,106 @@
+FRIDAY_RESPONSES = {"synonyms": ("пятница", "ассистент", "бот")}
 
-COMMANDS_APPS = ("открой", "запусти", "включи", "сделай")
-COMMAND_WEBSITES = ("найди")
-COMMANDS_SORT_FILES = ("рассортировать", "рассортируй", "организовать файлы", "организуй файлы", "приберись", "навести порядок", "отсортируй", "сортируй")
-COMMANDS_CLEAN_FOLDER = ("создай папку" ,"создать папку", "найди папку", "найти папку")
-COMMANDS_CLEAN_FILE = ("найди файл", "найти файл")
-COMMANDS_CLEAN_DISK = ("найди", "поищи")
-COMMANDS_SCREENSHOT = ("скриншот", "снимок экрана")
-COMMANDS_SET_VOLUME = ("поставь громкость на", "установи громкость", "громкость на", "звук на")
-COMMANDS_VOLUME_UP = ("громче", "увеличь громкость", "повысь звук", "сделай громче", "подними громкость", "прибавь звук")
-COMMANDS_VOLUME_DOWN = ("тише", "уменьши громкость", "понижай звук", "сделай тише", "убавь громкость", "сбавь звук")
-COMMANDS_VOLUME_MUTE = ("выключи звук", "отключи звук", "сделай без звука", "заглуши")
-COMMANDS_SYS_FOLDERS = {
-    "Desktop": ["на рабочем столе", "в десктопе"],
-    "Downloads": ["в загрузках", "в папке загрузки"],
-    "Documents": ["в документах", "в папке документы"],
-    "Music": ["в музыке", "в папке музыка"],
-    "Pictures": ["в изображениях", "в фотографиях", "в папке фотографии", "в папке изображения"],
-    "C:/": ["на компьютере", "везде", "на диске", "в системе", "по диску"]
+LEXICON = {
+    "apps": {
+        "keywords": ("запусти", "включи", "сделай"),
+        "handler": "handles_apps"
+    },
+    "websites": {
+        "keywords": ("открой", "найди"),
+        "handler": "handles_websites"
+    },
+    "sort_files": {
+        "keywords": ("рассортировать", "рассортируй", "организовать файлы", "организуй файлы",
+                     "приберись", "навести порядок", "отсортируй", "сортируй"),
+        "handler": "handles_sorting_files"
+    },
+    "folders_create": {
+        "keywords": ("создай папку", "создать папку"),
+        "handler": "handles_create_folder"
+    },
+    "folders_find": {
+        "keywords": ("найди папку", "найти папку"),
+        "handler": "handles_find_folder"
+    },
+    "files": {
+        "keywords": ("найди файл", "найти файл"),
+        "handler": "handles_find_file"
+    },
+    "disks": {
+        "keywords": ("найди", "поищи"),
+        "handler": "handles_find_disk"
+    },
+    "volume_set": {
+        "keywords": ("поставь громкость на", "установи громкость", "громкость на", "звук на"),
+        "handler": "handles_set_volume"
+    },
+    "volume_up": {
+        "keywords": ("громче", "увеличь громкость", "повысь звук", "сделай громче",
+                     "подними громкость", "прибавь звук"),
+        "handler": "handles_increase_volume"
+    },
+    "volume_down": {
+        "keywords": ("тише", "уменьши громкость", "понижай звук", "сделай тише",
+                     "убавь громкость", "сбавь звук"),
+        "handler": "handles_decrease_volume"
+    },
+    "volume_mute": {
+        "keywords": ("выключи звук", "отключи звук", "сделай без звука", "заглуши"),
+        "handler": "handles_mute_volume"
+    },
+    "brightness_set": {
+        "keywords": ("поставь яркость на", "сделай яркость на"),
+        "handler": "handles_brightness"
+    },
 }
+
+FUNCTION_RESPONSES = {
+    "general": [
+        "Sure, I'm on it.",
+        "Consider it done.",
+        "Executing your command now.",
+        "Done. Anything else?",
+        "I've got it covered.",
+        "Your wish is my command.",
+        "All set, moving forward.",
+        "Command received, taking action.",
+        "Processing now."
+    ],
+    "search": [
+        "Searching for that now.",
+        "Looking it up.",
+        "Let me find that for you.",
+        "Finding it as we speak.",
+        "I'll locate it right away."
+    ],
+    "open_app": [
+        "Opening it now.",
+        "Starting the application.",
+        "Launching it for you.",
+        "App is on, ready to go."
+    ],
+    "file_operations": [
+        "Handling your files now.",
+        "Sorting it out.",
+        "Working on that file.",
+        "File operation completed."
+    ],
+    "settings_change": [
+        "Adjusting that setting.",
+        "Setting it as requested.",
+        "Done, settings updated.",
+        "Configuration changed."
+    ]
+}
+
+COMMANDS_SYS_FOLDERS = {
+     "Desktop": ["на рабочем столе", "в десктопе"],
+     "Downloads": ["в загрузках", "в папке загрузки"],
+     "Documents": ["в документах", "в папке документы"],
+     "Music": ["в музыке", "в папке музыка"],
+     "Pictures": ["в изображениях", "в фотографиях", "в папке фотографии", "в папке изображения"],
+     "C:/": ["на компьютере", "везде", "на диске", "в системе", "по диску"]
+ }
 
 APPS = {
     "adobe after effects": ["after effects", "адоб афтер эффектс", "афтер эффектс", "afterfx"],

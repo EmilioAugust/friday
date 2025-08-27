@@ -1,44 +1,45 @@
 import webbrowser
 import os
 import shutil
-from keyboard import send
+import screen_brightness_control as sbc
 from AppOpener import open as open_app
 from pathlib import Path
-from lexicon.lexicon import APPS, SITES, COMMANDS_CLEAN_FOLDER, COMMANDS_SYS_FOLDERS, COMMANDS_APPS, COMMANDS_SCREENSHOT, COMMANDS_CLEAN_FILE
-from services.services import cleaning_file_name, cleaning_folder_name, cleaning_name_c
+from lexicon.lexicon import APPS, SITES, LEXICON
+from services.services import cleaning_file_name, cleaning_folder_create_name, cleaning_folder_find_name, cleaning_name_c, cleaning_set_brightness
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from services.services import cleaning_set_volume
 
 def handles_apps(user_input):
-    user_input.lower()
-    for text in COMMANDS_APPS:
+    app_name = user_input.lower()
+    for text in LEXICON["apps"]["keywords"]:
         if text in user_input:
-            user_input = user_input.replace(text, "").strip()
+            app_name = user_input.replace(text, "").strip()
     for key, value in APPS.items():
         for text in value:
-            if text in user_input:
+            if text in app_name:
                 open_app(key, throw_error=True)
                 break
     
 def handles_websites(user_input):
     webbrowser.register('Firefox', None, webbrowser.BackgroundBrowser('C:/Program Files/Mozilla Firefox/firefox.exe'))
-    for text in COMMANDS_APPS:
-        if text in user_input:
-            user_input = user_input.replace(text, "").strip()
+    command_text = user_input
+    for text in LEXICON["websites"]["keywords"]:
+        if text in command_text:
+            command_text = user_input.replace(text, "").strip()
 
     for key, value in SITES.items():
-        if user_input in value:
+        if command_text in value:
             webbrowser.get('Firefox').open_new_tab(f'https://www.{key}.com/')
             print("Successfully opened. Enjoy!")
 
     for value in SITES.values():
         if value not in SITES.values():
-            webbrowser.get('Firefox').open_new_tab('https://www.google.com/search?q={}'.format(user_input))
+            webbrowser.get('Firefox').open_new_tab('https://www.google.com/search?q={}'.format(command_text))
             print("Couldn't understand of what you're saying, maybe Google can help you.")
 
-def handles_sorting_files():
+def handles_sorting_files(user_input):
     categories_dict = {
         "Documents": [".docx", ".pdf", ".txt", ".doc", ".xlsx", ".pptx"],
         "Images": [".png", ".jpg", ".jpeg", ".gif", ".heif"],
@@ -71,7 +72,7 @@ def handles_sorting_files():
     print("Successfully moved.")
 
 def handles_create_folder(user_input):
-    text = cleaning_folder_name(user_input)
+    text = cleaning_folder_create_name(user_input)
     input_path = "/Users/Friday/" + text[0]
     os.chdir(input_path)
 
@@ -82,10 +83,10 @@ def handles_create_folder(user_input):
 def handles_find_folder(user_input):
     found_folders = []
     command_text = user_input
-    folder_text = cleaning_folder_name(command_text)
+    folder_text = cleaning_folder_find_name(command_text)
     for root, dirs, _ in os.walk('C:/Users/Friday/{}'.format(folder_text[0])):
         for dir in dirs:
-            if folder_text[1] in dir:
+            if folder_text[1].lower() in dir.lower():
                 found_folders.append(dir)
                 print(f"Название папки: {dir}")
                 print(f"Путь: {os.path.join(root, dir)}")                           
@@ -96,7 +97,7 @@ def handles_find_file(user_input):
     file_text = cleaning_file_name(user_input)
     for root, _, files in os.walk('C:/Users/Friday/{}'.format(file_text[0])):
         for file in files:
-            if file_text[1] in file:
+            if file_text[1].lower() in file.lower():
                 found_files.append(file)
                 print(f"Название файла: {file}")
                 print(f"Путь: {os.path.join(root, file)}")
@@ -155,3 +156,8 @@ def handles_mute_volume(user_input):
     volume.SetMasterVolumeLevelScalar(0, None)
     current_volume = float(volume.GetMasterVolumeLevelScalar())
     print("Без звука")
+
+def handles_brightness(user_input):
+    cleaned_number = cleaning_set_brightness(user_input)
+    sbc.set_brightness(cleaned_number)
+    print(f"Яркость поставлена на {cleaned_number}%")
