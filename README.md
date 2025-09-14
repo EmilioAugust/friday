@@ -1,5 +1,4 @@
-# PC Assistant
-Russian: 
+# PC Assistant / Russian:
 
 Простой Python-ассистент, который позволяет:
 - Управлять громкостью и яркостью,
@@ -21,7 +20,7 @@ Russian:
 
 ⚠️ Важно: имя всегда должно быть первым словом в команде.  
 
-English: 
+# PC Assistant / English: 
 
 A simple Python-based assistant that can:
 
