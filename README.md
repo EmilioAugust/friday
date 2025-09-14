@@ -1,4 +1,5 @@
 # PC Assistant
+Russian: 
 
 Простой Python-ассистент, который позволяет:
 - Управлять громкостью и яркостью,
@@ -19,3 +20,28 @@
 - `Пятница, открой Google и найди Python FastAPI`  
 
 ⚠️ Важно: имя всегда должно быть первым словом в команде.  
+
+English: 
+
+A simple Python-based assistant that can:
+
+- Control volume and brightness
+- Launch applications
+- Search for files on your computer
+- Search on Google
+- Open websites
+
+## How to Use
+
+The assistant responds to commands that start with its name.
+You can use different trigger names: **"Friday"** or **"Bot"** (can be changed in `lexicon.py`).
+
+### Example Commands:
+
+- `Friday, open YouTube`
+- `Bot, launch Telegram`
+- `Friday, find the file report.docx`
+- `Bot, decrease volume`
+- `Friday, open Google and search for Python FastAPI`
+
+⚠️ Important: The assistant’s name must always be the first word in the command.
